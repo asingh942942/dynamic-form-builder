@@ -1,38 +1,96 @@
-.App {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Navbar */
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 25px 25px 0 25px;
+  padding-bottom: 25px;
+  border-bottom: 0.5px solid lightgray;
+}
+
+nav > ul {
+  display: flex;
+  list-style-type: none;
+  gap: 20px;
+}
+
+nav > ul > li {
+  background-color: rgb(234, 240, 242);
+  padding: 8px 10px;
+  border-radius: 50px;
+}
+
+nav > ul > li > a {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Landing Page */
+
+.landing-page {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100vh;
+  background-color: #f2f2f2;
+}
+
+.landing-page-info {
+  flex: 1;
+  padding: 2rem;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.landing-page-info > h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.landing-page-info > h2 {
+  font-size: 1.5rem;
+  color: #555555;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.landing-page-image {
+  flex: 1;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+.landing-page-image > img {
+  max-width: 100%;
+  height: auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Register and Login Form */
+
+form {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 15px;
+  padding: 25px;
+  box-shadow: 0 2px 0 #ecf4f9;
+  border: 0.5px solid #ecf4f9;
+  border-radius: 5px;
+  width: fit-content;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Protected Page */
+
+.login-alert {
+  margin: 25px;
 }
