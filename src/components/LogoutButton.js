@@ -13,11 +13,8 @@ const LogoutButton = () => {
 
       // navigate to / route
       navigate("/");
-
-      // Handle success, e.g., redirect to login or display success message
     } catch (error) {
       console.error(error.response.data);
-      // Handle error, e.g., display error message
     }
   };
 

@@ -10,8 +10,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 25px 25px 0 25px;
-  padding-bottom: 25px;
+  padding: 25px;
   border-bottom: 0.5px solid lightgray;
 }
 
@@ -39,7 +38,6 @@ nav > ul > li > a {
   align-items: center;
   justify-content: space-around;
   height: 100vh;
-  background-color: #f2f2f2;
 }
 
 .landing-page-info {
@@ -93,4 +91,36 @@ form {
 
 .login-alert {
   margin: 25px;
+}
+
+/* Forms Component */
+.forms {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 15px;
+  margin: 0 50px 0 50px;
+}
+
+.form {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  border: 1px solid rgb(231, 235, 240);
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.form-title {
+  font-size: 36px;
+}
+
+/* AddField Component */
+.form-content {
+  display: flex;
+  flex-flow: column;
+  align-items: left;
+  width: fit-content;
+  background-color: aliceblue;
 }

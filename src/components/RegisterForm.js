@@ -17,10 +17,8 @@ const RegisterForm = () => {
         password,
       });
       console.log(response.data);
-      // Handle success, e.g., display success message or redirect to login
     } catch (error) {
       console.error(error.response.data);
-      // Handle error, e.g., display error message
     }
   };
 

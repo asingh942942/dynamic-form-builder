@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Button from "@mui/material/Button";
 
 const AddField = ({ currentForm }) => {
   const [question, setQuestion] = useState("");
@@ -8,6 +9,22 @@ const AddField = ({ currentForm }) => {
   const [numOptions, setNumOptions] = useState(0);
   const [options, setOptions] = useState([]);
   const [fields, setFields] = useState([]);
+  const [fetchedFields, setFetchedFields] = useState([]);
+  const [formName, setFormName] = useState("");
+
+  const getFields = async () => {
+    try {
+      const response = await axios.get(`/api/fields/${currentForm}`);
+      setFormName(response.data.formName);
+      setFetchedFields(response.data.formData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getFields();
+  }, []);
 
   const handleAddField = () => {
     if (question.trim() === "") {
@@ -74,7 +91,7 @@ const AddField = ({ currentForm }) => {
       // Reset the form fields
       setFields([]);
 
-      console.log(response.data.formdata);
+      console.log(response.data.message);
     } catch (error) {
       console.error(error);
     }
@@ -84,7 +101,7 @@ const AddField = ({ currentForm }) => {
     if (fieldType === "text" || fieldType === "number") {
       return (
         <div className="form-content">
-          <h2>Field Form</h2>
+          <h2>{formName}</h2>
           <label>
             Question:
             <textarea
@@ -98,7 +115,7 @@ const AddField = ({ currentForm }) => {
     } else {
       return (
         <div className="form-content">
-          <h2>Field Form</h2>
+          <h2>{formName}</h2>
           <label>
             Question:
             <textarea
@@ -133,80 +150,121 @@ const AddField = ({ currentForm }) => {
     }
   };
 
+  const handleDeleteField = async (fieldId) => {
+    try {
+      // Send a DELETE request to delete the form with the specified ID
+      await axios.delete(`/api/field/${currentForm}/${fieldId}`);
+
+      console.log(fieldId);
+
+      // Refetch the forms to update the list after deletion
+      getFields();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <div className="field-form">
-      <div className="sidebar">
-        <h2>Options</h2>
-        <ul>
-          <li>
-            <input
-              type="radio"
-              name="fieldType"
-              value="text"
-              checked={fieldType === "text"}
-              onChange={handleFieldTypeChange}
-            />
-            Text
-          </li>
-          <li>
-            <input
-              type="radio"
-              name="fieldType"
-              value="radio"
-              checked={fieldType === "radio"}
-              onChange={handleFieldTypeChange}
-            />
-            Radio
-          </li>
-          <li>
-            <input
-              type="radio"
-              name="fieldType"
-              value="checkboxes"
-              checked={fieldType === "checkboxes"}
-              onChange={handleFieldTypeChange}
-            />
-            Checkboxes
-          </li>
-          <li>
-            <input
-              type="radio"
-              name="fieldType"
-              value="number"
-              checked={fieldType === "number"}
-              onChange={handleFieldTypeChange}
-            />
-            Number
-          </li>
-        </ul>
-        {showOptionsPopup && (
-          <button onClick={handleAddField}>Add Field</button>
-        )}
-        {!showOptionsPopup && (
-          <button onClick={handleSubmitForm}>Submit Form</button>
+    <>
+      <div className="field-form">
+        {renderFieldForm()}
+        <div className="sidebar">
+          <h3>Options</h3>
+          <ul>
+            <li>
+              <input
+                type="radio"
+                name="fieldType"
+                value="text"
+                checked={fieldType === "text"}
+                onChange={handleFieldTypeChange}
+              />
+              Text
+            </li>
+            <li>
+              <input
+                type="radio"
+                name="fieldType"
+                value="radio"
+                checked={fieldType === "radio"}
+                onChange={handleFieldTypeChange}
+              />
+              Radio
+            </li>
+            <li>
+              <input
+                type="radio"
+                name="fieldType"
+                value="checkboxes"
+                checked={fieldType === "checkboxes"}
+                onChange={handleFieldTypeChange}
+              />
+              Checkboxes
+            </li>
+            <li>
+              <input
+                type="radio"
+                name="fieldType"
+                value="number"
+                checked={fieldType === "number"}
+                onChange={handleFieldTypeChange}
+              />
+              Number
+            </li>
+          </ul>
+          {showOptionsPopup && (
+            <button onClick={handleAddField}>Add Field</button>
+          )}
+          {!showOptionsPopup && (
+            <button onClick={handleSubmitForm}>Submit Form</button>
+          )}
+        </div>
+        {fields.length > 0 && (
+          <div className="fields-list">
+            <h3>Fields:</h3>
+            <ul>
+              {fields.map((field, index) => (
+                <li key={index}>
+                  <h3>{field.question}</h3>
+                  {field.answerOptions && (
+                    <ul>
+                      {field.answerOptions.map((option, i) => (
+                        <li key={i}>{option}</li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
       </div>
-      {renderFieldForm()}
-      {fields.length > 0 && (
-        <div className="fields-list">
-          <h2>Fields:</h2>
-          <ul>
-            {fields.map((field, index) => (
-              <li key={index}>
-                <h3>{field.question}</h3>
-                {field.answerOptions && (
-                  <ul>
-                    {field.answerOptions.map((option, i) => (
-                      <li key={i}>{option}</li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
+      <div className="current-form-fields">
+        {/* Display the fetched fields data */}
+        <h3>Fetched Fields:</h3>
+        <ul>
+          {fetchedFields.map((field, index) => (
+            <li key={index}>
+              <h3>{field.question}</h3>
+              {field.answerOptions && (
+                <ul>
+                  {field.answerOptions.map((option, i) => (
+                    <li key={i}>{option}</li>
+                  ))}
+                </ul>
+              )}
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={() => handleDeleteField(field._id)}
+              >
+                Delete Form
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 };
 

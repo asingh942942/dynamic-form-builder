@@ -21,11 +21,8 @@ const LoginForm = () => {
         // navigate to /loggdin route
         navigate("/loggedin");
       }
-
-      // Handle success, e.g., redirect to a different page
     } catch (error) {
       console.error(error.response.data);
-      // Handle error, e.g., display error message
     }
   };
 

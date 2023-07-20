@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 const AddForm = () => {
   const [formName, setFormName] = useState("");
@@ -28,7 +29,13 @@ const AddForm = () => {
 
   return (
     <div>
-      <button onClick={() => setIsModalOpen(true)}>Add Form</button>
+      <Button
+        style={{ borderRadius: "25px", boxShadow: "none" }}
+        variant="contained"
+        onClick={() => setIsModalOpen(true)}
+      >
+        Add Form
+      </Button>
       {isModalOpen && (
         <div className="modal">
           <form onSubmit={handleFormSubmit}>

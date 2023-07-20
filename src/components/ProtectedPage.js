@@ -26,7 +26,7 @@ const ProtectedPage = () => {
   }, []);
 
   return isLoggedIn ? (
-    <div>
+    <div style={{ backgroundColor: "#f3f6f9", height: "100vh" }}>
       <Navbar login="none" signup="none" />
       <h1>Welcome, User!</h1>
       <Forms />

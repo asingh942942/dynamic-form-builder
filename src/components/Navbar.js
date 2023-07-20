@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
+import logo from "../images/logo.svg";
 
 const Navbar = (props) => {
   return (
     <nav>
       <div className="logo">
         <Link to="/">
-          <img src="/path/to/logo.png" alt="Logo" />
+          <img src={logo} alt="Logo" />
         </Link>
       </div>
       <ul className="nav-links">
