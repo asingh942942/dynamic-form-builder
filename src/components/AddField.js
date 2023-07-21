@@ -258,7 +258,7 @@ const AddField = ({ currentForm }) => {
                 color="secondary"
                 onClick={() => handleDeleteField(field._id)}
               >
-                Delete Form
+                Delete Field
               </Button>
             </li>
           ))}
