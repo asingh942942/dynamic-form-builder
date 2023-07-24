@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 
 const FormsPage = () => {
   const [forms, setForms] = useState([]);
@@ -41,27 +44,37 @@ const FormsPage = () => {
     }
   };
 
+  const handleViewForm = (formId) => {
+    navigate(`/form/${formId}`); // Navigate to the new "ViewFormPage" with the formId as a parameter
+  };
+
   return (
-    <div className="forms-container">
-      <h2 className="form-heading">Your Forms</h2>
-      <div className="forms">
-        {forms.map((form) => (
-          <div className="form" key={form._id}>
-            <h3 className="form-title">{form.name}</h3>
-            <Button variant="text" onClick={() => handleEditForm(form._id)}>
-              Edit Form
-            </Button>
-            <Button
-              variant="text"
-              onClick={() => handleDeleteForm(form._id)}
-              style={{ color: "red" }}
-            >
-              Delete Form
-            </Button>
-          </div>
-        ))}
-      </div>
-    </div>
+    <>
+      {forms.map((form) => (
+        <Grid item xs={12} sm={6} md={4} lg={3} key={form._id}>
+          <Card style={{ borderRadius: 10 }} elevation={0}>
+            <CardContent>
+              <h3 className="form-title">{form.name}</h3>
+              <Button variant="text" onClick={() => handleEditForm(form._id)}>
+                Edit Form
+              </Button>
+              <div style={{ display: "inline-block" }}>
+                <Button variant="text" onClick={() => handleViewForm(form._id)}>
+                  View Form
+                </Button>
+                <Button
+                  variant="text"
+                  onClick={() => handleDeleteForm(form._id)}
+                  style={{ color: "red" }}
+                >
+                  Delete Form
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </Grid>
+      ))}
+    </>
   );
 };
 

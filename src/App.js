@@ -5,6 +5,7 @@ import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import ProtectedPage from "./components/ProtectedPage";
 import EditForm from "./components/EditForm";
+import ViewForm from "./components/ViewForm";
 import { useEffect } from "react";
 import axios from "axios";
 import "./App.css";
@@ -36,6 +37,7 @@ function App() {
         <Route exact path="/signup" element={<RegisterForm />} />
         <Route exact path="/loggedin" element={<ProtectedPage />} />
         <Route exact path="/editform/:formId" element={<EditForm />} />
+        <Route exact path="/form/:formId" element={<ViewForm />} />
       </Routes>
     </Router>
   );
