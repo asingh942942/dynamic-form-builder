@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
-import logo from "../images/logo.svg";
+import logo from "../images/dfb-logo-transparent.png";
 
 const Navbar = (props) => {
   return (
     <nav>
       <div className="logo">
         <Link to="/">
-          <img src={logo} alt="Logo" />
+          <img style={{ width: 100 }} src={logo} alt="Logo" />
         </Link>
       </div>
       <ul className="nav-links">

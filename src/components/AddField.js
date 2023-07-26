@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
+import { Card, Grid } from "@mui/material";
 
 const AddField = ({ currentForm }) => {
   const [question, setQuestion] = useState("");
@@ -59,7 +60,7 @@ const AddField = ({ currentForm }) => {
     const selectedFieldType = e.target.value;
     setFieldType(selectedFieldType);
 
-    if (selectedFieldType === "radio" || selectedFieldType === "checkboxes") {
+    if (selectedFieldType === "radio" || selectedFieldType === "checkbox") {
       setShowOptionsPopup(true);
     } else {
       setShowOptionsPopup(false);
@@ -166,64 +167,92 @@ const AddField = ({ currentForm }) => {
 
   return (
     <>
-      <div className="field-form">
-        {renderFieldForm()}
-        <div className="sidebar">
-          <h3>Options</h3>
-          <ul>
-            <li>
-              <input
-                type="radio"
-                name="fieldType"
-                value="text"
-                checked={fieldType === "text"}
-                onChange={handleFieldTypeChange}
-              />
-              Text
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fieldType"
-                value="radio"
-                checked={fieldType === "radio"}
-                onChange={handleFieldTypeChange}
-              />
-              Radio
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fieldType"
-                value="checkboxes"
-                checked={fieldType === "checkboxes"}
-                onChange={handleFieldTypeChange}
-              />
-              Checkboxes
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fieldType"
-                value="number"
-                checked={fieldType === "number"}
-                onChange={handleFieldTypeChange}
-              />
-              Number
-            </li>
-          </ul>
-          {showOptionsPopup && (
-            <button onClick={handleAddField}>Add Field</button>
-          )}
-          {!showOptionsPopup && (
-            <button onClick={handleSubmitForm}>Submit Form</button>
-          )}
-        </div>
-        {fields.length > 0 && (
-          <div className="fields-list">
-            <h3>Fields:</h3>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={3}>
+          <div className="sidebar">
+            {renderFieldForm()}
+            <h3>Options</h3>
             <ul>
-              {fields.map((field, index) => (
+              <li>
+                <input
+                  type="radio"
+                  name="fieldType"
+                  value="text"
+                  checked={fieldType === "text"}
+                  onChange={handleFieldTypeChange}
+                />
+                Text
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  name="fieldType"
+                  value="radio"
+                  checked={fieldType === "radio"}
+                  onChange={handleFieldTypeChange}
+                />
+                Radio
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  name="fieldType"
+                  value="checkbox"
+                  checked={fieldType === "checkbox"}
+                  onChange={handleFieldTypeChange}
+                />
+                Checkbox
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  name="fieldType"
+                  value="number"
+                  checked={fieldType === "number"}
+                  onChange={handleFieldTypeChange}
+                />
+                Number
+              </li>
+            </ul>
+            {showOptionsPopup && (
+              <button onClick={handleAddField}>Add Field</button>
+            )}
+            {!showOptionsPopup && (
+              <button onClick={handleSubmitForm}>Submit Form</button>
+            )}
+          </div>
+        </Grid>
+        <Grid item xs={12} md={9} container>
+          <div className="field-form">
+            {fields.length > 0 && (
+              <div className="fields-list">
+                <Grid item xs={12}>
+                  <h3>Fields:</h3>
+                </Grid>
+                <ul>
+                  {fields.map((field, index) => (
+                    <Grid key={index} item xs={12}>
+                      <Card>
+                        <h3>{field.question}</h3>
+                        {field.answerOptions && (
+                          <ul>
+                            {field.answerOptions.map((option, i) => (
+                              <li key={i}>{option}</li>
+                            ))}
+                          </ul>
+                        )}
+                      </Card>
+                    </Grid>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+          <div className="current-form-fields">
+            {/* Display the fetched fields data */}
+            <h3>Fetched Fields:</h3>
+            <ul>
+              {fetchedFields.map((field, index) => (
                 <li key={index}>
                   <h3>{field.question}</h3>
                   {field.answerOptions && (
@@ -233,37 +262,19 @@ const AddField = ({ currentForm }) => {
                       ))}
                     </ul>
                   )}
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => handleDeleteField(field._id)}
+                  >
+                    Delete Field
+                  </Button>
                 </li>
               ))}
             </ul>
           </div>
-        )}
-      </div>
-      <div className="current-form-fields">
-        {/* Display the fetched fields data */}
-        <h3>Fetched Fields:</h3>
-        <ul>
-          {fetchedFields.map((field, index) => (
-            <li key={index}>
-              <h3>{field.question}</h3>
-              {field.answerOptions && (
-                <ul>
-                  {field.answerOptions.map((option, i) => (
-                    <li key={i}>{option}</li>
-                  ))}
-                </ul>
-              )}
-              <Button
-                variant="outlined"
-                color="secondary"
-                onClick={() => handleDeleteField(field._id)}
-              >
-                Delete Field
-              </Button>
-            </li>
-          ))}
-        </ul>
-      </div>
+        </Grid>
+      </Grid>
     </>
   );
 };

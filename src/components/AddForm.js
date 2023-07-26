@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import Button from "@mui/material/Button";
+import { Fab, Box, Button, Modal, TextField } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 const AddForm = () => {
   const [formName, setFormName] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -17,11 +18,8 @@ const AddForm = () => {
       console.log(response.data);
 
       // Close the modal and reset the form name
-      setIsModalOpen(false);
+      handleClose();
       setFormName("");
-
-      // Reload page to display most recently added form
-      navigate("/loggedin");
     } catch (error) {
       console.error(error);
     }
@@ -29,28 +27,30 @@ const AddForm = () => {
 
   return (
     <div>
-      <Button
-        style={{ borderRadius: "25px", boxShadow: "none" }}
+      <Fab
+        color="primary"
+        aria-label="add"
         variant="contained"
-        onClick={() => setIsModalOpen(true)}
+        onClick={handleOpen}
       >
-        Add Form
-      </Button>
-      {isModalOpen && (
-        <div className="modal">
-          <form onSubmit={handleFormSubmit}>
-            <label>
-              Form Name:
-              <input
+        <AddIcon />
+      </Fab>
+      {
+        <Modal open={open} onClose={handleClose}>
+          <form className="modal" onSubmit={handleFormSubmit}>
+            <Box>
+              <TextField
+                variant="outlined"
                 type="text"
                 value={formName}
+                label="Form Name"
                 onChange={(e) => setFormName(e.target.value)}
               />
-            </label>
-            <button type="submit">Submit</button>
+            </Box>
+            <Button type="submit">Submit</Button>
           </form>
-        </div>
-      )}
+        </Modal>
+      }
     </div>
   );
 };

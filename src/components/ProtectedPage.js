@@ -4,8 +4,7 @@ import AddForm from "./AddForm";
 import Navbar from "./Navbar";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Alert from "@mui/material/Alert";
-import Grid from "@mui/material/Grid";
+import { Alert, Grid } from "@mui/material";
 
 const ProtectedPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -29,9 +28,9 @@ const ProtectedPage = () => {
   return isLoggedIn ? (
     <div style={{ backgroundColor: "#f3f6f9", height: "100vh" }}>
       <Navbar login="none" signup="none" />
-      <Grid container spacing={5}>
+      <Grid container spacing={2} style={{ margin: 15 }}>
         <Grid item xs={12}>
-          <h1>Welcome, User!</h1>
+          <h2>Dashboard</h2>
         </Grid>
         <Forms />
         <Grid item xs={12}>

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Navbar from "./Navbar";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -18,7 +19,7 @@ const LoginForm = () => {
       console.log(response.data);
 
       if (response.data.message === "User logged in successfully") {
-        // navigate to /loggdin route
+        // navigate to /loggdin route with username as param
         navigate("/loggedin");
       }
     } catch (error) {
@@ -27,25 +28,28 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <TextField
-        variant="outlined"
-        type="text"
-        label="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <TextField
-        variant="outlined"
-        type="password"
-        label="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <Button variant="outlined" type="submit">
-        Login
-      </Button>
-    </form>
+    <>
+      <Navbar />
+      <form onSubmit={handleLogin}>
+        <TextField
+          variant="outlined"
+          type="text"
+          label="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <TextField
+          variant="outlined"
+          type="password"
+          label="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button variant="outlined" type="submit">
+          Login
+        </Button>
+      </form>
+    </>
   );
 };
 

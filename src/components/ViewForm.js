@@ -31,13 +31,13 @@ const ViewForm = () => {
   const handleSubmitForm = async () => {
     try {
       // Send a POST request to submit the form data
-      await axios.post("/api/response", {
+      const response = await axios.post("/api/response", {
         formId,
         formData,
       });
 
-      // Handle successful form submission
-      console.log("Form submitted successfully!");
+      // Handle backend response
+      console.log(response.data.message);
     } catch (error) {
       console.error("Form submission error:", error);
     }
@@ -52,7 +52,7 @@ const ViewForm = () => {
           onChange={(e) => handleFieldChange(field._id, e.target.value)}
         />
       );
-    } else if (field.type === "radio" || field.type === "checkboxes") {
+    } else if (field.type === "radio" || field.type === "checkbox") {
       return (
         <>
           {field.answerOptions.map((option, index) => (
@@ -61,7 +61,6 @@ const ViewForm = () => {
                 type={field.type}
                 name={field._id}
                 value={option}
-                checked={formData[field._id] === option}
                 onChange={(e) => handleFieldChange(field._id, e.target.value)}
               />
               {option}
