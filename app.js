@@ -10,7 +10,7 @@ app.use(cors());
 // Set up the session middleware
 app.use(
   session({
-    secret: "your-secret-key",
+    secret: "secretKeyPhase",
     resave: false,
     saveUninitialized: false,
   })
